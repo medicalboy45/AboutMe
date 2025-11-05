@@ -7,174 +7,130 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
     :root{
-        --bg:#000;--text:#ffffff;          /* ← WHITE TEXT */
-        --line:#0a0a0a;--highlight:#00ff00;
-        --cursor:#00ff00;--glow:rgba(0,255,0,.12);--accent-glow:rgba(0,255,0,.3);
+        --bg:#000;--text:#ffffff;--highlight:#00ff00;--cursor:#00ff00;
+        --glow:rgba(0,255,0,.12);--accent-glow:rgba(0,255,0,.3);
     }
     *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth;cursor:none;overflow-x:hidden}
+    html{cursor:none;overflow-x:hidden}
     body{
         background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;
-        font-size:1.05rem;line-height:1.88;min-height:100vh;position:relative;
+        font-size:1.05rem;line-height:1.88;min-height:100vh;
         -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+        padding:60px 20px;
     }
 
-    /* ---------- CURSOR ---------- */
+    /* CURSOR */
     .cursor-glow{
-        position:fixed;width:32px;height:32px;border:1.5px solid rgba(0,255,0,.5);
+        position:fixed;width:28px;height:28px;border:1.5px solid rgba(0,255,0,.5);
         border-radius:50%;pointer-events:none;z-index:9999;
         transform:translate(-50%,-50%);opacity:0;
-        box-shadow:0 0 20px var(--glow),0 0 40px var(--glow);
-        transition:opacity .4s ease;
+        box-shadow:0 0 18px var(--glow),0 0 36px var(--glow);
+        transition:opacity .3s ease;
     }
     .cursor-glow.active{opacity:1}
 
-    /* ---------- HEADER (sticky) ---------- */
+    /* HEADER */
     .header{
-        position:sticky;top:0;left:0;width:100%;padding:18px 20px;
-        display:flex;justify-content:space-between;align-items:center;
-        z-index:100;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-        border-bottom:1px solid rgba(0,255,0,.08);
+        text-align:center;margin-bottom:50px;
     }
-    .header h1{font-size:1.8rem;color:var(--highlight);font-weight:400}
-    .header .cursor{display:inline-block;width:9px;height:1.4em;background:var(--cursor);
-        animation:blink 1.2s steps(1) infinite;margin-left:2px}
+    .header h1{
+        font-size:2rem;color:var(--highlight);font-weight:400;
+        letter-spacing:-1px;display:inline-block;
+    }
+    .header .cursor{
+        display:inline-block;width:10px;height:1.5em;background:var(--cursor);
+        animation:blink 1.2s steps(1) infinite;margin-left:3px;
+    }
+    .date{
+        font-size:0.9rem;color:var(--text);margin-top:8px;opacity:0.7;
+    }
     @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
 
-    /* ---------- NAV DOTS ---------- */
-    .nav-dots{
-        position:fixed;right:12px;top:50%;transform:translateY(-50%);
-        display:flex;flex-direction:column;gap:10px;z-index:99;
+    /* ACCORDION */
+    .accordion{
+        max-width:700px;margin:0 auto;
     }
-    .dot{
-        width:9px;height:9px;background:rgba(0,255,0,.15);
-        border:1px solid rgba(0,255,0,.3);border-radius:50%;
-        cursor:pointer;transition:all .4s ease;
+    .item{
+        margin-bottom:16px;border:1px solid rgba(0,255,0,.1);
+        border-radius:12px;overflow:hidden;
+        background:rgba(10,10,10,.6);
+        transition:all .4s ease;
     }
-    .dot.active{background:var(--highlight);transform:scale(1.5);
-        box-shadow:0 0 12px var(--accent-glow)}
+    .item:hover{
+        border-color:rgba(0,255,0,.3);
+        box-shadow:0 0 20px rgba(0,255,0,.15);
+    }
+    .title{
+        padding:18px 24px;color:var(--highlight);
+        font-size:1.3rem;text-transform:uppercase;letter-spacing:1.2px;
+        cursor:pointer;position:relative;
+        user-select:none;transition:all .3s ease;
+    }
+    .title::after{
+        content:'+';position:absolute;right:24px;top:50%;
+        transform:translateY(-50%);font-size:1.6rem;
+        color:var(--highlight);transition:transform .3s ease;
+    }
+    .item.open .title::after{
+        content:'−';transform:translateY(-50%) rotate(0deg);
+    }
+    .content{
+        max-height:0;overflow:hidden;
+        transition:max-height .5s cubic-bezier(0.23,1,0.32,1);
+        background:rgba(5,5,8,.8);
+    }
+    .content p{
+        padding:0 24px 24px;color:var(--text);font-weight:300;
+        line-height:2;font-size:1rem;
+    }
 
-    /* ---------- SECTIONS ---------- */
-    .section{
-        min-height:100vh;padding:120px 20px 80px;display:flex;align-items:center;
-        justify-content:center;position:relative;opacity:0;
-        transform:translateY(40px);transition:all 1.4s cubic-bezier(.23,1,.32,1);
-    }
-    .section.visible{opacity:1;transform:translateY(0)}
-
-    .card{
-        max-width:720px;width:100%;background:rgba(8,8,12,.75);
-        backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-        border:1px solid rgba(0,255,0,.12);border-radius:18px;
-        padding:48px 36px;box-shadow:0 20px 60px rgba(0,0,0,.9);
-        position:relative;overflow:hidden;
-        transform:perspective(1000px) rotateX(8deg);
-        transition:transform 1.2s cubic-bezier(.23,1,.32,1);
-    }
-    .section.visible .card{transform:perspective(1000px) rotateX(0)}
-    .card:hover{transform:perspective(1000px) rotateX(0) translateY(-6px);
-        box-shadow:0 30px 80px rgba(0,0,0,.95),0 0 60px var(--accent-glow)}
-
-    .card::before{
-        content:'';position:absolute;top:0;left:0;width:100%;height:100%;
-        background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0px,
-        rgba(0,0,0,.03) 1px,rgba(0,0,0,0) 2px);
-        pointer-events:none;opacity:0;transition:opacity .8s ease;
-    }
-    .section.visible .card::before{opacity:1}
-
-    .card::after{
-        content:'';position:absolute;inset:-2px;border:2px solid transparent;
-        border-radius:20px;background:linear-gradient(45deg,transparent,var(--accent-glow),transparent) border-box;
-        -webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
-        -webkit-mask-composite:xor;mask-composite:exclude;
-        opacity:0;animation:breathe 4s ease-in-out infinite;
-    }
-    .section.visible .card::after{opacity:1}
-    @keyframes breathe{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.8;transform:scale(1.02)}}
-
-    .card h2{
-        font-size:1.7rem;color:var(--highlight);margin-bottom:24px;
-        text-transform:uppercase;letter-spacing:1.5px;text-align:center;
-        opacity:0;transform:translateY(20px);
-        animation:titleIn 1.2s cubic-bezier(.23,1,.32,1) forwards;
-    }
-    .section.visible .card h2{animation-delay:.4s}
-    .card p{
-        font-size:1.02rem;color:var(--text);      /* ← WHITE */
-        line-height:2;font-weight:300;
-        opacity:0;transform:translateY(15px);
-        animation:textIn 1.3s cubic-bezier(.23,1,.32,1) forwards;
-    }
-    .section.visible .card p{animation-delay:.7s}
-    @keyframes titleIn{to{opacity:1;transform:translateY(0)}}
-    @keyframes textIn{to{opacity:1;transform:translateY(0)}}
-
-    /* ---------- TELEGRAM CTA ---------- */
+    /* TELEGRAM CTA */
     .telegram-cta{
-        text-align:center;padding:100px 20px 60px;
-        opacity:0;transform:translateY(30px);
-        animation:fadeUp 1.5s cubic-bezier(.23,1,.32,1) .5s forwards;
+        text-align:center;margin:80px auto 60px;max-width:700px;
     }
-    .telegram-cta p{font-size:1.05rem;color:var(--text);margin-bottom:28px}
+    .telegram-cta p{font-size:1rem;color:var(--text);margin-bottom:20px}
     .telegram-link{
         display:inline-flex;align-items:center;gap:12px;
-        background:rgba(10,10,10,.7);backdrop-filter:blur(10px);
-        border:1px solid rgba(0,255,0,.15);border-radius:50px;
-        padding:14px 28px;color:var(--highlight);font-size:1rem;
-        text-decoration:none;transition:all .6s cubic-bezier(.23,1,.32,1);
-        box-shadow:0 8px 30px rgba(0,0,0,.6);
+        background:rgba(10,10,10,.7);border:1px solid rgba(0,255,0,.15);
+        border-radius:50px;padding:14px 28px;color:var(--highlight);
+        font-size:1rem;text-decoration:none;
+        transition:all .5s ease;box-shadow:0 8px 25px rgba(0,0,0,.6);
     }
     .telegram-link:hover{
-        background:rgba(0,255,0,.08);color:#fff;transform:translateY(-4px);
-        box-shadow:0 15px 40px rgba(0,255,0,.2);border-color:var(--highlight);
+        background:rgba(0,255,0,.08);color:#fff;
+        transform:translateY(-3px);border-color:var(--highlight);
+        box-shadow:0 15px 35px rgba(0,255,0,.2);
     }
     .telegram-link img{width:32px;height:32px}
-    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 
-    /* ---------- FOOTER ---------- */
+    /* FOOTER */
     footer{
-        text-align:center;padding:60px 20px 40px;color:var(--text);
-        font-size:.8rem;opacity:.7;letter-spacing:1px;
+        text-align:center;padding:40px 20px 20px;
+        color:var(--text);font-size:0.8rem;opacity:0.6;
     }
 
-    /* ---------- BGM TOGGLE ---------- */
+    /* BGM TOGGLE */
     .bgm-toggle{
-        position:fixed;bottom:20px;right:20px;width:46px;height:46px;
+        position:fixed;bottom:20px;right:20px;width:48px;height:48px;
         background:rgba(10,10,10,.8);border:1.5px solid rgba(0,255,0,.2);
         border-radius:50%;display:flex;align-items:center;justify-content:center;
-        cursor:none;opacity:0;transform:scale(.85);
-        transition:all .7s cubic-bezier(.23,1,.32,1);z-index:100;
-        backdrop-filter:blur(6px);
+        cursor:none;opacity:0;transform:scale(.9);
+        transition:all .6s ease;z-index:100;
     }
     .bgm-toggle.visible{opacity:.5;transform:scale(1)}
     .bgm-toggle:hover{opacity:1;transform:scale(1.2);
-        box-shadow:0 0 30px var(--accent-glow);border-color:var(--highlight)}
+        box-shadow:0 0 25px var(--accent-glow);border-color:var(--highlight)}
     .bgm-toggle svg{width:20px;height:20px;fill:#00ff00}
-    .bgm-toggle.playing svg{animation:pulse 2s ease-in-out infinite}
-    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 
-    /* ---------- MOBILE ---------- */
+    /* MOBILE */
     @media (max-width:768px){
-        .header{padding:14px 16px}
-        .header h1{font-size:1.5rem}
-        .section{padding:100px 15px 60px}
-        .card{padding:36px 24px;border-radius:14px}
-        .card h2{font-size:1.5rem}
-        .nav-dots{right:10px;gap:8px}
-        .dot{width:8px;height:8px}
-        .bgm-toggle{bottom:16px;right:16px;width:42px;height:42px}
+        body{padding:50px 15px}
+        .header h1{font-size:1.6rem}
+        .title{font-size:1.2rem;padding:16px 20px}
+        .title::after{right:20px}
+        .content p{padding:0 20px 20px;font-size:0.98rem}
+        .bgm-toggle{bottom:16px;right:16px;width:44px;height:44px}
         .cursor-glow{display:none}
-    }
-
-    /* ---------- FIRST SECTION VISIBLE ON LOAD ---------- */
-    .section:first-of-type,
-    .section:first-of-type .card,
-    .section:first-of-type .card::before,
-    .section:first-of-type .card::after,
-    .section:first-of-type .card h2,
-    .section:first-of-type .card p{
-        opacity:1!important;transform:none!important;
     }
 </style>
 </head>
@@ -187,32 +143,39 @@
     <div class="date">29 Oct • 17 • Static</div>
 </header>
 
-<div class="nav-dots">
-    <div class="dot" data-section="0"></div>
-    <div class="dot" data-section="1"></div>
-    <div class="dot" data-section="2"></div>
-    <div class="dot" data-section="3"></div>
-    <div class="dot" data-section="4"></div>
-    <div class="dot" data-section="5"></div>
-    <div class="dot" data-section="6"></div>
-    <div class="dot" data-section="7"></div>
+<div class="accordion">
+
+    <div class="item">
+        <div class="title">I'M CHILL</div>
+        <div class="content"><p>I’m a pretty chill and straightforward person. I don’t overthink much, and I don’t like drama. I keep my circle small, but I get along with people easily. If someone talks to me, I talk back. If someone needs something, I help if I can.</p></div>
+    </div>
+
+    <div class="item">
+        <div class="title">I DON'T DISAPPEAR</div>
+        <div class="content"><p>I don’t disappear randomly or cut people off without a reason. If something bothers me, I usually just talk about it instead of staying silent. I’m not the type to assume the worst. People get busy, so I don’t take things personally.</p></div>
+    </div>
+
+    <div class="item">
+        <div class="title">FRIENDSHIPS</div>
+        <div class="content"><p>Friendships matter to me. I try to stay consistent, and if someone is important to me, I don’t just give up on them. I don’t chase attention, but I do value the people I connect with.</p></div>
+    </div>
+
+    <div class="item">
+        <div class="title">RELATIONSHIPS</div>
+        <div class="content"><p>In relationships, I’m loyal and calm. I don’t play games or do dramatic stuff. If I care about someone, I show it directly. If there’s a problem, I communicate instead of running away or ignoring it.</p></div>
+    </div>
+
+    <div class="item">
+        <div class="title">I'M BALANCED</div>
+        <div class="content"><p>I’m not overly emotional, but I’m not cold either. Just balanced. I prefer honest conversations and real connections. No fake attitude, no unnecessary arguments.</p></div>
+    </div>
+
+    <div class="item">
+        <div class="title">MY LIFE</div>
+        <div class="content"><p>Outside of that, I’m focused on my own life — studies, music, hobbies, and improving myself. I take things step by step, and I’m not in a rush. I keep things simple.</p></div>
+    </div>
+
 </div>
-
-<section class="section" id="section0"><div class="card"><h2>I DON’T TRUST</h2><p>I don’t trust people.<br>Not friends, not relationships. Every time I trusted someone, they left. So now I keep my distance. I don’t open up. I don’t rely on anyone. If I feel hurt or heavy, I shut down and disappear. It’s easier than getting attached and ending up disappointed.</p></div></section>
-
-<section class="section" id="section1"><div class="card"><h2>I FEEL TOO MUCH</h2><p>I feel things too strongly and it pisses me off. Small stuff affects me more than it should. If someone stops talking like before, my mind jumps to the conclusion that they don’t want me around. So I stop trying. I stop talking. I cut myself out before they do.</p></div></section>
-
-<section class="section" id="section2"><div class="card"><h2>FRIENDSHIPS</h2><p>Friendships don’t feel real anymore. People lose interest fast. They replace you the moment someone better shows up. If someone acts different, gives short replies, or starts ignoring me, I don’t ask questions. I just back out. I don’t beg, I don’t chase, I don’t explain. If they care, they’ll notice. They usually don’t.</p></div></section>
-
-<section class="section" id="section3"><div class="card"><h2>RELATIONSHIPS</h2><p>Relationships are the same. I don’t believe in “forever” or “loyalty.” People talk big, but they leave when they get bored. Words mean nothing without actions, and most people don’t have consistency. I’m not interested in someone who treats me like an option. If someone wants me, they show up. Simple.</p></div></section>
-
-<section class="section" id="section4"><div class="card"><h2>I GET ATTACHED</h2><p>I get attached fast, but I never show it.<br>I care too much, but I act like I don’t.<br>I hate that about myself.</p></div></section>
-
-<section class="section" id="section5"><div class="card"><h2>WHEN IT GETS HEAVY</h2><p>When life gets heavy — depression, anxiety, suicidal thoughts — I don’t reach out. I stay quiet. I isolate. I don’t tell anyone what I’m dealing with. Not because I’m strong, but because I don’t trust anyone to actually give a damn.</p></div></section>
-
-<section class="section" id="section6"><div class="card"><h2>I PUSH AWAY</h2><p>I push people away so they don’t get the chance to hurt me.<br>I distance myself before they change on me.<br>I prefer being alone because it’s predictable.</p></div></section>
-
-<section class="section" id="section7"><div class="card"><h2>THIS IS ME</h2><p>I’m not “fine.” I just don’t talk about it.<br>I’m not “cold.” I’m tired.<br>This is who I am.</p></div></section>
 
 <div class="telegram-cta">
     <p>If you want to become friends or talk — message me on Telegram.</p>
@@ -233,24 +196,33 @@
 </audio>
 
 <script>
-/* ---------- CURSOR ---------- */
+/* CURSOR */
 const cursor=document.getElementById('cursorGlow');
 let mx=0,my=0,cx=0,cy=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.classList.add('active')});
 function anim(){cx+=(mx-cx)*.18;cy+=(my-cy)*.18;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(anim)}
 anim();
 
-/* ---------- SECTION REVEAL ---------- */
-const secs=document.querySelectorAll('.section'),dots=document.querySelectorAll('.dot');
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');
-    const i=Array.from(secs).indexOf(e.target);
-    dots.forEach((d,j)=>d.classList.toggle('active',j===i));
-}})},{threshold:.7,rootMargin:'0px 0px -15% 0px'});
-secs.forEach(s=>obs.observe(s));
+/* ACCORDION */
+document.querySelectorAll('.title').forEach(title => {
+    title.addEventListener('click', () => {
+        const item = title.parentElement;
+        const content = title.nextElementSibling;
+        const isOpen = item.classList.contains('open');
 
-dots.forEach(d=>d.addEventListener('click',()=>{secs[d.dataset.section].scrollIntoView({behavior:'smooth'})}));
+        document.querySelectorAll('.item').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.content').style.maxHeight = null;
+        });
 
-/* ---------- BGM ---------- */
+        if (!isOpen) {
+            item.classList.add('open');
+            content.style.maxHeight = content.scrollHeight + 'px';
+        }
+    });
+});
+
+/* BGM */
 const audio=document.getElementById('lofi'),toggle=document.getElementById('bgmToggle');
 let playing=false;
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing){audio.pause();toggle.classList.remove('playing');playing=false}});
@@ -263,7 +235,7 @@ toggle.addEventListener('click',e=>{e.stopPropagation();
 });
 document.body.addEventListener('click',tryPlay,{once:true});
 
-/* ---------- BLINK CURSOR ---------- */
+/* BLINK CURSOR */
 setInterval(()=>{document.querySelector('.cursor').style.opacity=document.querySelector('.cursor').style.opacity==='0'?'1':'0'},600);
 </script>
 </body>
