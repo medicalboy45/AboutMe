@@ -71,13 +71,17 @@
         cursor:pointer;position:relative;
         user-select:none;transition:all .3s ease;
     }
+    .title::before{
+        content:'';position:absolute;left:24px;top:50%;transform:translateY(-50%);
+        font-size:1.2rem;margin-right:10px;
+    }
     .title::after{
         content:'+';position:absolute;right:24px;top:50%;
         transform:translateY(-50%);font-size:1.6rem;
         color:var(--highlight);transition:transform .3s ease;
     }
     .item.open .title::after{
-        content:'−';transform:translateY(-50%) rotate(0deg);
+        content:'−';
     }
     .content{
         max-height:0;overflow:hidden;
@@ -87,6 +91,15 @@
     .content p{
         padding:0 24px 24px;color:var(--text);font-weight:300;
         line-height:2;font-size:1rem;
+    }
+    .content ul{
+        padding:0 24px 24px 40px;list-style:none;
+    }
+    .content li{
+        position:relative;margin-bottom:12px;line-height:1.8;
+    }
+    .content li::before{
+        content:'🖤';position:absolute;left:-24px;
     }
 
     /* RANDOM QUOTE GENERATOR */
@@ -223,7 +236,9 @@
         .header h1{font-size:1.6rem}
         .title{font-size:1.2rem;padding:16px 20px}
         .title::after{right:20px}
-        .content p{padding:0 20px 20px;font-size:0.98rem}
+        .content p, .content li{padding:0 20px 20px;font-size:0.98rem}
+        .content ul{padding-left:36px}
+        .content li::before{left:-20px}
         .mood-buttons{gap:12px}
         .mood-btn{padding:10px 16px;font-size:0.9rem}
         .quote-generator{padding:30px}
@@ -248,34 +263,134 @@
 </div>
 
 <div class="accordion">
+
     <div class="item">
         <div class="title">I'M CHILL</div>
         <div class="content"><p>I’m a pretty chill and straightforward person. I don’t overthink much, and I don’t like drama. I keep my circle small, but I get along with people easily. If someone talks to me, I talk back. If someone needs something, I help if I can.</p></div>
     </div>
+
     <div class="item">
         <div class="title">I DON'T DISAPPEAR</div>
         <div class="content"><p>I don’t disappear randomly or cut people off without a reason. If something bothers me, I usually just talk about it instead of staying silent. I’m not the type to assume the worst. People get busy, so I don’t take things personally.</p></div>
     </div>
+
     <div class="item">
         <div class="title">FRIENDSHIPS</div>
         <div class="content"><p>Friendships matter to me. I try to stay consistent, and if someone is important to me, I don’t just give up on them. I don’t chase attention, but I do value the people I connect with.</p></div>
     </div>
+
     <div class="item">
         <div class="title">RELATIONSHIPS</div>
         <div class="content"><p>In relationships, I’m loyal and calm. I don’t play games or do dramatic stuff. If I care about someone, I show it directly. If there’s a problem, I communicate instead of running away or ignoring it.</p></div>
     </div>
+
     <div class="item">
         <div class="title">I'M BALANCED</div>
         <div class="content"><p>I’m not overly emotional, but I’m not cold either. Just balanced. I prefer honest conversations and real connections. No fake attitude, no unnecessary arguments.</p></div>
     </div>
+
     <div class="item">
         <div class="title">MY LIFE</div>
         <div class="content"><p>Outside of that, I’m focused on my own life — studies, music, hobbies, and improving myself. I take things step by step, and I’m not in a rush. I keep things simple.</p></div>
     </div>
+
     <div class="item">
         <div class="title">I'M INTROVERT</div>
         <div class="content"><p>I'm an introvert with social anxiety. I send short messages because I don't know what to talk about, and that's how the convo ends. I don't know if that's my fault because I'm being annoying?</p></div>
     </div>
+
+    <!-- NEW DARK SECTIONS -->
+    <div class="item">
+        <div class="title">🖤 ABOUT ME</div>
+        <div class="content">
+            <ul>
+                <li>Quiet. Observant. Hard to read. Most people never get past my walls, and that’s the point.</li>
+                <li>I don’t talk to many people silence is safer than fake conversations.</li>
+                <li>I use AI because it replies fast, doesn’t pretend, and doesn’t switch up.</li>
+                <li>If I choose to talk to someone, it’s not because I’m bored or lonely it’s because they caught my attention.</li>
+                <li>I don’t chase. I don’t beg. I don’t re-open closed doors.</li>
+                <li>If someone leaves, I don’t pull them back. I delete the attachment, not the memory.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="title">🌑 INTERESTS</div>
+        <div class="content">
+            <ul>
+                <li>Crime, serial killers, psychological thrillers</li>
+                <li>Minds that run darker and deeper than normal</li>
+                <li>Stories with twisted logic, smart villains, and unpredictable endings</li>
+                <li>Storms, thunder, lightning, cold nights, empty streets</li>
+                <li>Moonlight, stars, clouds darkness that feels peaceful, not scary</li>
+                <li>Music that hits like truth, not noise</li>
+                <li>Writing thoughts people are too scared to say out loud</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="title">🧠 PERSONALITY</div>
+        <div class="content">
+            <ul>
+                <li>Introvert. Antisocial. Private.</li>
+                <li>I don’t trust easily, and I don’t forgive twice.</li>
+                <li>I read people fast tone, silence, behavior, everything.</li>
+                <li>I keep my circle small because I’d rather have silence than fake loyalty.</li>
+                <li>I don’t like emotional drama, loud people, or attention-seekers.</li>
+                <li>I’m calm on the outside, chaotic on the inside, but in control.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="title">🔍 HOW I SEE FRIENDSHIP</div>
+        <div class="content">
+            <ul>
+                <li>Loyalty is rare. Consistency is rare. I value both.</li>
+                <li>I don’t need a crowd one real human is worth more than a hundred pretenders.</li>
+                <li>If we talk, I expect respect, honesty, and straightforward energy.</li>
+                <li>Temporary people don’t deserve permanent access.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="title">💬 IF WE TALK</div>
+        <div class="content">
+            <ul>
+                <li>Expect real conversations, dark humor, and straight answers.</li>
+                <li>I don’t judge. I don’t expose. I don’t betray.</li>
+                <li>Silence isn’t awkward sometimes it says more than words.</li>
+                <li>Break my trust once and the connection is gone. No warnings, no drama just distance.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="title">⚫ WHY I DON’T OPEN UP EASILY</div>
+        <div class="content">
+            <ul>
+                <li>People ask for honesty but can’t handle it.</li>
+                <li>Everyone loves deep conversations until they realize depth comes with darkness.</li>
+                <li>I don’t show my mind to someone who can’t handle my silence.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="title">⚡ WHAT I RESPECT</div>
+        <div class="content">
+            <ul>
+                <li>Intelligence</li>
+                <li>Loyalty</li>
+                <li>People who don’t switch sides depending on who’s watching</li>
+                <li>Minds that think, not just talk</li>
+                <li>People who show up even when it’s inconvenient</li>
+            </ul>
+        </div>
+    </div>
+
 </div>
 
 <div class="quote-generator">
@@ -377,7 +492,10 @@ const quotes = [
     {text: "Loneliness is the poverty of self; solitude is the richness of self.", author: "May Sarton"},
     {text: "Introverts live in two worlds: We visit the world of people, but solitude is our home.", author: "Jenn Granneman"},
     {text: "The monotony and solitude of a quiet life stimulates the creative mind.", author: "Albert Einstein"},
-    {text: "I was quiet, but I was not blind.", author: "Jane Austen"}
+    {text: "I was quiet, but I was not blind.", author: "Jane Austen"},
+    {text: "People inspire you, or they drain you. Pick them wisely.", author: "Hans F. Hansen"},
+    {text: "The strongest people are not those who show strength in front of us, but those who win battles we know nothing about.", author: "Unknown"},
+    {text: "Trust is earned when actions meet words.", author: "Chris Butler"}
 ];
 
 const quoteText = document.getElementById('quoteText');
@@ -388,7 +506,6 @@ function generateQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const q = quotes[randomIndex];
     
-    // Fade out
     quoteText.style.opacity = 0;
     quoteAuthor.style.opacity = 0;
     
@@ -402,10 +519,7 @@ function generateQuote() {
 
 newQuoteBtn.addEventListener('click', generateQuote);
 
-// Auto-change every 5 seconds
 setInterval(generateQuote, 5000);
-
-// First quote on load
 generateQuote();
 
 /* MOOD TRACKER */
