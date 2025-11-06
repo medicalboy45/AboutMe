@@ -140,7 +140,7 @@
 
 <header class="header">
     <h1>Aditya<span class="cursor"></span></h1>
-    <div class="date">29 Oct • 17 • Static</div>
+    <div class="date">06 Nov • 25 • Static</div>
 </header>
 
 <div class="accordion">
@@ -173,6 +173,11 @@
     <div class="item">
         <div class="title">MY LIFE</div>
         <div class="content"><p>Outside of that, I’m focused on my own life — studies, music, hobbies, and improving myself. I take things step by step, and I’m not in a rush. I keep things simple.</p></div>
+    </div>
+
+    <div class="item">
+        <div class="title">I'M INTROVERT</div>
+        <div class="content"><p>I'm an introvert with social anxiety. I send short messages because I don't know what to talk about, and that's how the convo ends. I don't know if that's my fault because I'm being annoying?</p></div>
     </div>
 
 </div>
