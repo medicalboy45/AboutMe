@@ -46,6 +46,11 @@
     }
     @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
 
+    /* VISITOR COUNTER */
+    .visitor-counter{
+        text-align:center;margin:40px auto;font-size:0.9rem;opacity:0.6;
+    }
+
     /* ACCORDION */
     .accordion{
         max-width:700px;margin:0 auto;
@@ -82,6 +87,96 @@
     .content p{
         padding:0 24px 24px;color:var(--text);font-weight:300;
         line-height:2;font-size:1rem;
+    }
+
+    /* RANDOM QUOTE GENERATOR */
+    .quote-generator{
+        max-width:700px;margin:70px auto;text-align:center;
+        padding:40px;border:1px solid rgba(0,255,0,.12);
+        border-radius:16px;background:rgba(10,10,10,.5);
+        box-shadow:0 0 30px rgba(0,255,0,.1);
+    }
+    .quote-gen-title{
+        color:var(--highlight);margin-bottom:30px;font-size:1.4rem;
+    }
+    .quote-display{
+        font-size:1.15rem;font-style:italic;opacity:0.85;
+        min-height:100px;display:flex;align-items:center;justify-content:center;
+        padding:20px;transition:opacity .6s ease;
+    }
+    .quote-author{
+        margin-top:20px;font-size:0.95rem;opacity:0.7;transition:opacity .6s ease;
+    }
+    .gen-button{
+        margin-top:30px;padding:14px 32px;background:rgba(10,10,10,.8);
+        border:1.5px solid rgba(0,255,0,.2);border-radius:50px;
+        color:var(--highlight);font-size:1rem;cursor:pointer;
+        transition:all .5s ease;box-shadow:0 8px 25px rgba(0,0,0,.6);
+    }
+    .gen-button:hover{
+        background:rgba(0,255,0,.1);border-color:var(--highlight);
+        transform:translateY(-4px);box-shadow:0 15px 40px rgba(0,255,0,.2);
+    }
+    .auto-note{
+        margin-top:15px;font-size:0.8rem;opacity:0.5;
+    }
+
+    /* MOOD TRACKER */
+    .mood-tracker{
+        max-width:700px;margin:60px auto;text-align:center;
+    }
+    .mood-title{
+        color:var(--highlight);margin-bottom:20px;
+    }
+    .mood-buttons{
+        display:flex;justify-content:center;gap:20px;flex-wrap:wrap;
+    }
+    .mood-btn{
+        padding:12px 20px;background:rgba(10,10,10,.7);
+        border:1px solid rgba(0,255,0,.15);border-radius:50px;
+        color:var(--text);cursor:pointer;transition:all .4s ease;
+    }
+    .mood-btn:hover{
+        background:rgba(0,255,0,.1);border-color:var(--highlight);
+        transform:translateY(-3px);
+    }
+    .mood-btn.selected{
+        background:var(--highlight);color:#000;
+    }
+
+    /* GUESTBOOK */
+    .guestbook{
+        max-width:700px;margin:80px auto;
+    }
+    .guestbook-title{
+        color:var(--highlight);text-align:center;margin-bottom:20px;
+    }
+    .messages{
+        max-height:300px;overflow-y:auto;padding:10px;
+        border:1px solid rgba(0,255,0,.1);border-radius:8px;
+        background:rgba(5,5,8,.6);
+    }
+    .message{
+        margin-bottom:12px;padding:10px;background:rgba(10,10,10,.5);
+        border-left:3px solid var(--highlight);border-radius:4px;
+    }
+    .message-name{
+        font-weight:400;color:var(--highlight);font-size:0.9rem;
+    }
+    .message-text{
+        font-size:0.95rem;
+    }
+    .guestbook-form{
+        margin-top:20px;display:flex;gap:10px;flex-direction:column;
+    }
+    .guestbook-form input, .guestbook-form textarea{
+        background:rgba(10,10,10,.7);border:1px solid rgba(0,255,0,.15);
+        padding:12px;border-radius:8px;color:var(--text);
+    }
+    .guestbook-form textarea{height:80px}
+    .guestbook-form button{
+        align-self:flex-end;padding:12px 24px;background:var(--highlight);color:#000;
+        border:none;border-radius:8px;cursor:pointer;
     }
 
     /* TELEGRAM CTA */
@@ -129,6 +224,11 @@
         .title{font-size:1.2rem;padding:16px 20px}
         .title::after{right:20px}
         .content p{padding:0 20px 20px;font-size:0.98rem}
+        .mood-buttons{gap:12px}
+        .mood-btn{padding:10px 16px;font-size:0.9rem}
+        .quote-generator{padding:30px}
+        .gen-button{padding:12px 28px}
+        .guestbook-form button{align-self:stretch}
         .bgm-toggle{bottom:16px;right:16px;width:44px;height:44px}
         .cursor-glow{display:none}
     }
@@ -143,43 +243,69 @@
     <div class="date">06 Nov • 25 • Static</div>
 </header>
 
-<div class="accordion">
+<div class="visitor-counter">
+    Visitor #<span id="visitorCount">00042</span> in the void
+</div>
 
+<div class="accordion">
     <div class="item">
         <div class="title">I'M CHILL</div>
         <div class="content"><p>I’m a pretty chill and straightforward person. I don’t overthink much, and I don’t like drama. I keep my circle small, but I get along with people easily. If someone talks to me, I talk back. If someone needs something, I help if I can.</p></div>
     </div>
-
     <div class="item">
         <div class="title">I DON'T DISAPPEAR</div>
         <div class="content"><p>I don’t disappear randomly or cut people off without a reason. If something bothers me, I usually just talk about it instead of staying silent. I’m not the type to assume the worst. People get busy, so I don’t take things personally.</p></div>
     </div>
-
     <div class="item">
         <div class="title">FRIENDSHIPS</div>
         <div class="content"><p>Friendships matter to me. I try to stay consistent, and if someone is important to me, I don’t just give up on them. I don’t chase attention, but I do value the people I connect with.</p></div>
     </div>
-
     <div class="item">
         <div class="title">RELATIONSHIPS</div>
         <div class="content"><p>In relationships, I’m loyal and calm. I don’t play games or do dramatic stuff. If I care about someone, I show it directly. If there’s a problem, I communicate instead of running away or ignoring it.</p></div>
     </div>
-
     <div class="item">
         <div class="title">I'M BALANCED</div>
         <div class="content"><p>I’m not overly emotional, but I’m not cold either. Just balanced. I prefer honest conversations and real connections. No fake attitude, no unnecessary arguments.</p></div>
     </div>
-
     <div class="item">
         <div class="title">MY LIFE</div>
         <div class="content"><p>Outside of that, I’m focused on my own life — studies, music, hobbies, and improving myself. I take things step by step, and I’m not in a rush. I keep things simple.</p></div>
     </div>
-
     <div class="item">
         <div class="title">I'M INTROVERT</div>
         <div class="content"><p>I'm an introvert with social anxiety. I send short messages because I don't know what to talk about, and that's how the convo ends. I don't know if that's my fault because I'm being annoying?</p></div>
     </div>
+</div>
 
+<div class="quote-generator">
+    <h3 class="quote-gen-title">Random Thought Generator</h3>
+    <div class="quote-display" id="quoteText">"Loading thoughts from the void..."</div>
+    <div class="quote-author" id="quoteAuthor"></div>
+    <button class="gen-button" id="newQuoteBtn">Generate Manually</button>
+    <div class="auto-note">Auto-changing every 5 seconds</div>
+</div>
+
+<div class="mood-tracker">
+    <h3 class="mood-title">Current Mood?</h3>
+    <div class="mood-buttons">
+        <button class="mood-btn" data-mood="Chill">Chill 😎</button>
+        <button class="mood-btn" data-mood="Tired">Tired 😴</button>
+        <button class="mood-btn" data-mood="Anxious">Anxious 😰</button>
+        <button class="mood-btn" data-mood="Good">Good 🙂</button>
+        <button class="mood-btn" data-mood="Deep">Deep Thoughts 🤔</button>
+    </div>
+    <p style="margin-top:20px;opacity:0.7;font-size:0.9rem;">Selected: <span id="selectedMood">None</span></p>
+</div>
+
+<div class="guestbook">
+    <h3 class="guestbook-title">Leave a message in the void</h3>
+    <div class="messages" id="messages"></div>
+    <div class="guestbook-form">
+        <input type="text" id="guestName" placeholder="Your name (optional)">
+        <textarea id="guestMessage" placeholder="Say something..."></textarea>
+        <button id="sendMessage">Send</button>
+    </div>
 </div>
 
 <div class="telegram-cta">
@@ -227,6 +353,103 @@ document.querySelectorAll('.title').forEach(title => {
     });
 });
 
+/* VISITOR COUNTER */
+let count = 42;
+const counter = document.getElementById('visitorCount');
+setInterval(() => {
+    count += Math.floor(Math.random() * 3) + 1;
+    counter.textContent = count.toString().padStart(5, '0');
+}, 15000);
+
+/* RANDOM QUOTE GENERATOR */
+const quotes = [
+    {text: "The quieter you become, the more you can hear.", author: "Ram Dass"},
+    {text: "Introverts are word economists in a world suffering from verbal diarrhea.", author: "Michaela Chung"},
+    {text: "Silence is a source of great strength.", author: "Lao Tzu"},
+    {text: "I restore myself when I'm alone.", author: "Marilyn Monroe"},
+    {text: "Your visions will become clear only when you can look into your own heart.", author: "Carl Jung"},
+    {text: "Blessed are those who do not fear solitude.", author: "Paulo Coelho"},
+    {text: "In silence, we hear the whispers of our soul.", author: "Unknown"},
+    {text: "Alone had always felt like an actual place to me, as if it weren’t a state of being, but rather a room where I could retreat to be who I really am.", author: "Cheryl Strayed"},
+    {text: "The best thinking has been done in solitude.", author: "Thomas Edison"},
+    {text: "I owe everything that I have done to the fact that I am very much at ease being alone.", author: "Marilynne Robinson"},
+    {text: "Don't underestimate me because I'm quiet. I know more than I say, think more than I speak and observe more than you know.", author: "Michaela Chung"},
+    {text: "Loneliness is the poverty of self; solitude is the richness of self.", author: "May Sarton"},
+    {text: "Introverts live in two worlds: We visit the world of people, but solitude is our home.", author: "Jenn Granneman"},
+    {text: "The monotony and solitude of a quiet life stimulates the creative mind.", author: "Albert Einstein"},
+    {text: "I was quiet, but I was not blind.", author: "Jane Austen"}
+];
+
+const quoteText = document.getElementById('quoteText');
+const quoteAuthor = document.getElementById('quoteAuthor');
+const newQuoteBtn = document.getElementById('newQuoteBtn');
+
+function generateQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    const q = quotes[randomIndex];
+    
+    // Fade out
+    quoteText.style.opacity = 0;
+    quoteAuthor.style.opacity = 0;
+    
+    setTimeout(() => {
+        quoteText.textContent = `"${q.text}"`;
+        quoteAuthor.textContent = `— ${q.author}`;
+        quoteText.style.opacity = 0.85;
+        quoteAuthor.style.opacity = 0.7;
+    }, 600);
+}
+
+newQuoteBtn.addEventListener('click', generateQuote);
+
+// Auto-change every 5 seconds
+setInterval(generateQuote, 5000);
+
+// First quote on load
+generateQuote();
+
+/* MOOD TRACKER */
+document.querySelectorAll('.mood-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        document.getElementById('selectedMood').textContent = btn.dataset.mood;
+    });
+});
+
+/* GUESTBOOK */
+const messagesDiv = document.getElementById('messages');
+const sendBtn = document.getElementById('sendMessage');
+const nameInput = document.getElementById('guestName');
+const msgInput = document.getElementById('guestMessage');
+
+function loadMessages() {
+    const saved = localStorage.getItem('guestbook');
+    if (saved) messagesDiv.innerHTML = saved;
+}
+function saveMessages() {
+    localStorage.setItem('guestbook', messagesDiv.innerHTML);
+}
+function addMessage(name, text) {
+    const div = document.createElement('div');
+    div.className = 'message';
+    div.innerHTML = `<div class="message-name">${name || 'Anonymous'}</div><div class="message-text">${text}</div>`;
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    saveMessages();
+}
+
+sendBtn.addEventListener('click', () => {
+    const name = nameInput.value.trim();
+    const text = msgInput.value.trim();
+    if (text) {
+        addMessage(name, text);
+        nameInput.value = '';
+        msgInput.value = '';
+    }
+});
+loadMessages();
+
 /* BGM */
 const audio=document.getElementById('lofi'),toggle=document.getElementById('bgmToggle');
 let playing=false;
@@ -235,7 +458,7 @@ document.body.addEventListener('click',()=>toggle.classList.add('visible'),{once
 function tryPlay(){audio.volume=.15;audio.play().catch(()=>{});}
 toggle.addEventListener('click',e=>{e.stopPropagation();
     if(playing){audio.pause();toggle.classList.remove('playing')}
-    else{audio.play().catch(()=>alert('Audio blocked. Click again.'));toggle.classList.add('playing')}
+    else{audio.play().catch(()=>{});toggle.classList.add('playing')}
     playing=!playing;
 });
 document.body.addEventListener('click',tryPlay,{once:true});
